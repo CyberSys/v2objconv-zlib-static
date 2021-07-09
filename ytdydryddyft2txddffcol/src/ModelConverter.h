@@ -188,7 +188,8 @@ public:
 						// Текстура
 						if(!shader.m_pParams[param].m_nDataType)
 						{
-							Texture *texture = (Texture *)shader.m_pParams[param].m_pData;
+							TextureDesc *texture = (TextureDesc *)shader.m_pParams[param].m_pData;
+                            //MessageBox(0, texture->m_pszName, "At texture iter", 0);
 							// Диффуз
 							if(!matInfo.pDiffuse && is_diffuse_sampler(hashes[param]))
 							{
@@ -221,7 +222,7 @@ public:
 				}
 				if(matInfo.pDiffuse)
 				{
-					Texture *texture = (Texture *)matInfo.pDiffuse->m_pData;
+					TextureDesc *texture = (TextureDesc *)matInfo.pDiffuse->m_pData;
 					char textureName[32];
 					strncpy(textureName, texture->m_pszName, 32);
 					geometry.matList.materials[mat].Initialise(255, 255, 255, 255, true, settings.m_fMaterialAmbient, settings.m_fMaterialDiffuse);
@@ -248,7 +249,7 @@ public:
 				}
 				if(settings.m_bExportNormalMap && matInfo.pNormal)
 				{
-					Texture *texture = (Texture *)matInfo.pNormal->m_pData;
+                    TextureDesc *texture = (TextureDesc *)matInfo.pNormal->m_pData;
 					char textureName[32];
 					strncpy(textureName, texture->m_pszName, 32);
 					geometry.matList.materials[mat].Extension.normalMap.Initialise(true, false, 0.0f, false);
@@ -730,7 +731,7 @@ public:
 						{
 							if(!shader.m_pParams[param].m_nDataType && shader.m_pParams[param].m_pData)
 							{
-								Texture *texture = (Texture *)shader.m_pParams[param].m_pData;
+                                TextureDesc *texture = (TextureDesc *)shader.m_pParams[param].m_pData;
 								if(!shader.m_pParams[param].m_nType)
 									texName = texture->m_pszName;
 								else
@@ -1729,10 +1730,10 @@ public:
 				add_lights_to_geometry(fragType->m_lights, fragType->m_pDrawable->m_pSkeleton, skelInfo.matrices, clump.geometryList.geometries[0]);
 				clump_post_process(&clump, settings.m_bGenerateDPForDynamicObjects, settings.m_bGenerateNPForDynamicObjects);
 
-				gtaRwErrorSet("Export as vehicle :%d", settings.m_bExportAsVehicle);
+				//gtaRwErrorSet("Export as vehicle :%d", settings.m_bExportAsVehicle);
 				if(settings.m_bExportAsVehicle)
 				{
-					gtaRwErrorSet("Exporting as vehicle...");
+					//gtaRwErrorSet("Exporting as vehicle...");
 					gtaRwClump newClump;
 					if(vehicle_converter::make_vehicle_clump(clump, newClump, skelInfo.skeleton->m_apTransformInverted, skelInfo.skeleton->m_wBoneCount))
 					{
@@ -1743,7 +1744,7 @@ public:
 							if(clump.geometryList.geometries[0].numVertices >= 65535)
 								LOGL("  WARNING: Geometry %d has more than 65535 vertices (%u).", i, clump.geometryList.geometries[0].numVertices);
 						}
-						gtaRwErrorSet("Exported as vehicle.");
+						//gtaRwErrorSet("Exported as vehicle.");
 					}
 					else
 					{
